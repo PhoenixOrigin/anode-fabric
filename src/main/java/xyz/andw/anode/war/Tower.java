@@ -1,6 +1,8 @@
 package xyz.andw.anode.war;
 
 public class Tower {
+    
+    private Pattern guildtower = Pattern.compile("\[([A-Z,a-z]{3,4})\] ([A-Z,a-z ]*) - ❤ ([0-9]*) \(([0-9,.]*)%\) - ☠ ([0-9]*)-([0-9]*) \(([0-9,.]*)x\)");
 
     public String guildTag;
     public String terrName;
@@ -49,33 +51,15 @@ public class Tower {
 
     // [SDU] Light Forest West Mid Tower - ❤ 300000 (10.0%) - ☠ 1000-1500 (0.5x)
     public static Tower fromBossString(String boss) {
-        String[] tagTerrRest = boss.split(" - ");
-        int tagTerrSpace = tagTerrRest[0].indexOf(" ");
-        String targetTag = tagTerrRest[0].substring(0, tagTerrSpace).replace("[","").replace("]","");
-        String targetTerr = tagTerrRest[0].substring(tagTerrSpace+1);
-        String[] terrNameSplit = targetTerr.split(" ");
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < terrNameSplit.length-1; i++) {
-            sb.append(terrNameSplit[i]); // get rid of the word tower in the name
-            if (i != terrNameSplit.length-2) 
-                sb.append(" ");
-        }
-        targetTerr = sb.toString();
-
-        String[] _hpDef = tagTerrRest[1].split(" ");
-        String hpString = _hpDef[1];
-        Long hp = Long.parseLong(hpString);
-        String defString = _hpDef[2];
-        float def = Float.parseFloat(defString.substring(1, defString.length()-2));
-
-        String[] _dmgSpd = tagTerrRest[2].split(" ");
-        String dmgRange = _dmgSpd[1];
-        int hyphenIdx = dmgRange.indexOf("-");
-        int dmgLo = Integer.parseInt(dmgRange.substring(0, hyphenIdx));
-        int dmgHi = Integer.parseInt(dmgRange.substring(hyphenIdx+1));
-        String spdString = _dmgSpd[2];
-        float atkSpeed = Float.parseFloat(spdString.substring(1, spdString.length()-2));
-
+        Matcher matcher = pattern.matcher(boss);
+        
+        String targetTag = ;
+        String targetTerr = ;
+        Long hp = ;
+        float def = ;
+        int dmgLo = ;
+        int dmgHi = ;
+        float atkSpeed = ;
         return new Tower(targetTag, targetTerr, hp, def, dmgLo, dmgHi, atkSpeed);
     }
 }
